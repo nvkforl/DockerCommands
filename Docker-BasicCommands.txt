@@ -1,0 +1,156 @@
+1. docker run redis
+        checks for the local copy, if not downloads the latest version of redis server from docker hub
+
+2. docker run redis:4.8
+        checks for the local copy redis 4.8 version, if not downloads the redis 4.8 
+        version of redis server from docker hub
+
+3. docker create redis
+        checks for the local latest copy, else download from docker hub and 
+        displays only the unique id of the image
+
+4. docker run busybox echo hi there
+        output: hi there
+
+5. docker run busybox ls
+        output: bin
+                dev
+                etc
+                home
+                proc
+                root
+                sys
+                tmp
+                usr
+                var
+
+
+     -------------------------------------------
+    | docker run = docker create + docker start |
+     -------------------------------------------
+
+6. docker create hello-world
+        output: f688865b49d071368610cd25e764592fa169bf94ee0a6d089a3190be0f6107de
+        hello-world ==> image name
+
+7. docker start -a f688865b49d071368610cd25e764592fa169bf94ee0a6d089a3190be0f6107de
+        output: Hello from Docker!! ..... all
+        -a ==> displays the output of the image and display console output of 
+               container and exit with container running
+        f688865b49d071368610cd25e764592fa169bf94ee0a6d089a3190be0f6107de ==> container id
+
+8. docker ps 
+        list the running containers 
+
+9. docker ps -all
+        list the history of running stoped containers
+
+10. docker run busybox echo hello there
+        output: hello there
+
+    docker ps -all
+    CONTAINER ID        IMAGE               COMMAND              CREATED             STATUS                     PORTS               NAMES
+    bd30ec947ba2        busybox             "echo hello there"   5 seconds ago       Exited (0) 4 seconds ago                       priceless_jepsen
+
+    docker start -a bd30ec947ba2
+        output: hello there
+
+    senario: ran busybox with command as 'echo hello there' 
+             history got logged with container id with COMMAND "echo hello there"
+             now start the container with -a with bd30ec947ba2
+
+11. docker system prune
+            removes and delete all the stoped containers from the file system
+
+12. docker create busybox echo hi there
+        output: d4aeee41e59b5ba31498624216e50c155dd8af7bfef8da8ae456e19afa8bb6b8
+    
+    docker logs d4aeee41e59b5ba31498624216e50c155dd8af7bfef8da8ae456e19afa8bb6b8 -> this will not work now
+
+    docker start d4aeee41e59b5ba31498624216e50c155dd8af7bfef8da8ae456e19afa8bb6b8
+        output: d4aeee41e59b5ba31498624216e50c155dd8af7bfef8da8ae456e19afa8bb6b8
+
+    docker logs d4aeee41e59b5ba31498624216e50c155dd8af7bfef8da8ae456e19afa8bb6b8
+        output: hi there
+
+    senario: create busybox echo hi there
+             since the container is created no logs will be produced
+             After starting the docker with container id 
+             logs - this command is not going to create anything, 
+                    insted displays the inside generated logs of the container
+
+12. a) docker create busybox ping google.com
+        output: 52d5f1fab4825cf51025fe0fa5c4e1dc98ebf840ddabe1b17847e7ee5e4a92c6                
+
+        docker start 52d5f1fab4825cf51025fe0fa5c4e1dc98ebf840ddabe1b17847e7ee5e4a92c6
+        output: 52d5f1fab4825cf51025fe0fa5c4e1dc98ebf840ddabe1b17847e7ee5e4a92c6
+
+        docker logs 52d5f1fab4825cf51025fe0fa5c4e1dc98ebf840ddabe1b17847e7ee5e4a92c6
+                PING google.com (142.250.76.46): 56 data bytes
+                64 bytes from 142.250.76.46: seq=0 ttl=116 time=51.858 ms
+                64 bytes from 142.250.76.46: seq=1 ttl=116 time=47.504 ms
+                                '
+                                '
+                                '
+
+                 ---------------------
+                | killing a container |
+                 ---------------------
+
+13. docker ps
+        CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+        52d5f1fab482        busybox             "ping google.com"   4 minutes ago       Up 4 minutes                            loving_nightingale
+        
+    docker stop 52d5f1fab482
+        output: 52d5f1fab482
+
+    docker kill 52d5f1fab482
+        output: 52d5f1fab482
+
+        Senario: started busybox with ping google.com command
+                 then we tried to stop the container, -> it will usually takes 10 seconds to the 
+                                                        container to stop as it provides h/w SIGTERM command 
+                                                        give little time to stop
+
+                 After restaring busybox with ping google.com command
+                 then we tried to Kill the container, -> means to shutdown the container right now. 
+                                                        by sending  h/w SIGKILL command 
+
+14. docker run redis
+        output: 1:M 10 Jan 2021 04:36:45.159 * Ready to accept connections
+
+    open a new terminal
+
+    docker ps
+        CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+        76d59d37c11a        redis               "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        6379/tcp            zealous_kilby
+        
+    docker exec -it 76d59d37c11a redis-cli
+        127.0.0.1:6379> set myvalue 5
+        OK
+        127.0.0.1:6379> get myvalue
+        "5"
+        127.0.0.1:6379> 
+
+    docker exec 76d59d37c11a redis-cli
+        output: no output displayed
+
+        Senario:after starting the redis server we need to started redis-cli mode
+                so we need to open in a new teminal and run the container in interactive mode
+
+15. docker run -it busybox sh
+        output: /$
+
+        senario: open the busybox container in interactive mode and open the shell prompt 
+
+
+16. docker run -p 8080:9001 imageId/imageName
+        senario: bind the port 
+                -p = port tag
+              8080 = local Machine port
+              9001 = container port
+
+17. Remove or Delete an image
+
+        sudo docker image rm -f jpacontainer/jpalearning:2.0
+        

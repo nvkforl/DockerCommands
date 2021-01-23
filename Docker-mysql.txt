@@ -1,0 +1,54 @@
+start mysql with volume 
+
+docker run -p 3307:3306 --name mysqlServerNvk -v /home/nitish/Desktop/mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root mysql:8.0
+
+docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                               NAMES
+adf01c0b4edf        mysql:8.0           "docker-entrypoint.s…"   About a minute ago   Up About a minute   33060/tcp, 0.0.0.0:3307->3306/tcp   mysqlServerNvk
+
+docker exec -it mysqlServerNvk bash
+
+mysql -uroot -proot
+
+        mysql> show databases;
+                +--------------------+
+                | Database           |
+                +--------------------+
+                | information_schema |
+                | mysql              |
+                | performance_schema |
+                | sys                |
+                +--------------------+
+
+        mysql> create database myFirstContainerDatabase;
+              Query OK, 1 row affected (0.11 sec)
+
+        mysql> show databases;
+                +--------------------------+
+                | Database                 |
+                +--------------------------+
+                | information_schema       |
+                | myFirstContainerDatabase |
+                | mysql                    |
+                | performance_schema       |
+                | sys                      |
+                +--------------------------+
+                5 rows in set (0.00 sec)
+
+
+-------------------------------------------------------
+Safley delete the container without delete the volume  |
+-------------------------------------------------------
+
+docker ps
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                               NAMES
+    adf01c0b4edf        mysql:8.0           "docker-entrypoint.s…"   13 minutes ago      Up 13 minutes       33060/tcp, 0.0.0.0:3307->3306/tcp   mysqlServerNvk
+
+docker rm -f mysqlServerNvk
+    mysqlServerNvk
+
+---------------------------------------------------------------------------------------------------------------------
+
+create new container with new name mysqlServerNvk1
+
+docker run -p 3307:3306 --name mysqlServerNvk1 -v /home/nitish/Desktop/mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root mysql:8.0

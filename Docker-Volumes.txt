@@ -1,0 +1,32 @@
+1. what are volumes?
+    To persist the data so that it can be shared by other containers 
+    even if we delete a conatiner then also data persist in volume location
+    then we require docker volume
+
+2. create / list / delete volumes
+    docker volume create myvol1
+        output: myvol1
+
+    docker volume ls
+        output: DRIVER              VOLUME NAME
+                local               myvol1
+
+    docker volume rm myvol1
+        output: myvol1
+        senario: This will remove only myvol1 
+
+    docker volume prune 
+       senario: This will remove all the unused volumes presnt in the local
+
+    docker volume inspect myvol1
+        output: [
+                    {
+                        "CreatedAt": "2021-01-14T11:34:38+05:30",
+                        "Driver": "local",
+                        "Labels": {},
+                        "Mountpoint": "/var/lib/docker/volumes/myvol1/_data",
+                        "Name": "myvol1",
+                        "Options": {},
+                        "Scope": "local"
+                    }
+                ]
