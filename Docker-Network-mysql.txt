@@ -1,0 +1,16 @@
+1. sudo docker network create jpatutorialNvk
+    55e7d03ff7e3b8b11436ba5a1f362b0afc451d223197d38fbaa25105f2298382
+
+2. sudo docker network ls
+        NETWORK ID          NAME                   DRIVER              SCOPE
+        54ca36605a1a        bridge                 bridge              local
+        98078d12fafa        host                   host                local
+        dc98e9c77d8f        jpa-learning_default   bridge              local
+        55e7d03ff7e3        jpatutorialNvk         bridge              local
+        a2678f794dc4        none                   null                local
+
+3. docker run --publish 3307:3306 --name mysql-standalone --network jpatutorialNvk -v /home/nitish/Desktop/mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=jpatutorial -e MYSQL_PASSWORD=root mysql:8.0
+
+
+sudo docker run -p 3307:3306 --name mysql-standalone -v /home/nitish/Desktop/mysqlVolume:/var/lib/mysql 
+-e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=root -e MYSQL_PASSWORD=root mysql:8.0

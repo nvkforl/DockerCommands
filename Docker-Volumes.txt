@@ -30,3 +30,22 @@
                         "Scope": "local"
                     }
                 ]
+
+Volumes are of 3 types
+
+1. Anonymous Volumes
+     docker run -v /var/lib/mysql
+
+        this is the default persistent volume is stored in /var/lib/docker/random-hash/_data
+        /var/lib/mysql -> this is the location of the mysql container's data stored location
+
+2. Named Volumes
+     docker run -v nvkData:/var/lib/mysql      
+
+        this is the default persistent volume is stored in /var/lib/docker/nvkData/_data
+
+3. Host volumes or bind volumes
+    docker run -v /opt/mysql/local/location:/var/lib/mysql
+
+        This is the customized location where container data location is bind to local Machine's location
+        /opt/mysql/local/location

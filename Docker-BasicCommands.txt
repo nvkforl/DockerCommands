@@ -153,4 +153,11 @@
 17. Remove or Delete an image
 
         sudo docker image rm -f jpacontainer/jpalearning:2.0
-        
+        sudo docker rmi -f 544f0333d7d1
+
+18. Remove all doceker ps -a container
+
+         docker rm $(docker ps -a -q)
+
+19. Remove a single stopped container
+         docker container rm 86e0bdcd02dc_Container_id
